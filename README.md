@@ -1,2 +1,19 @@
 # CloudFiles
-Nginx+PHP-powered Cloud File Storage
+
+
+/--------------\      /--------------\
+|     nginx    |      |     nginx    |
+|   Replica A  |      |   Replica B  |
+|    WebDAW    |      |    WebDAW    |
+\--------------/      \--------------/
+            \           /
+             \         /
+          /----------------\
+          |   php+nginx    |
+          |  BFS Uploader  |
+          \----------------/
+                  |
+                  |
+                  |
+          Client Application
+
