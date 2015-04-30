@@ -2,7 +2,7 @@
 
 Простая, отказоустойчивая схема с двумя репликами:
 
->
+>```
 >            Client requests:
 >         http://sh-a.example.com/
 >              |         |
@@ -26,5 +26,5 @@
 >                  |
 >                  |
 >          Client Application
->
+>```
 
