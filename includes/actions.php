@@ -1,3 +1,4 @@
+<?php
 
 function upload(CloudFiles $cf)
 {
