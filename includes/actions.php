@@ -52,7 +52,7 @@ function remove(CloudFiles $cf)
 	header('HTTP/1.1 400 invalid url');
 	$result = json_encode(array(
 	    'status' => 'fail',
-	    'message' => 'filename parameter must be a valid url stored in BFS',
+	    'message' => 'filename parameter must be a valid url stored in CloudFiles',
 	));
 	return $result;
     }
