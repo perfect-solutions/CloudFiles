@@ -7,7 +7,13 @@ function upload(CloudFiles $cf)
     } else {
         $name = $_FILES['upload']['name'];
     }
-
+    $name = preg_replace('@/+@','/', $name);
+    if (!preg_match('@^/@', $name)) {
+	return json_encode([
+	    'status' => 'fail',
+	    'message' => 'uri must be starts with /',
+	]);
+    }
 
     if (!empty($_FILES['upload'])){
 	$tmpFile = $_FILES['upload']['tmp_name'];
@@ -57,9 +63,17 @@ function remove(CloudFiles $cf)
 	return $result;
     }
 
-    $cf->deletefile($filename);
-    $result = json_encode(array(
-	'status' => 'ok',
-    ));
+    $result = $cf->deletefile($filename);
+    if ($result) {
+	$result = json_encode(array(
+	    'status' => 'ok',
+        ));
+    } else {
+	$result = json_encode(array(
+	    'status' => 'fail',
+	    'message' => 'not found',
+        ));
+
+    }
     return $result;
 }

@@ -21,7 +21,7 @@ if (empty($_GET['action']) || !in_array($_GET['action'], array('upload', 'remove
 
 $action = $_GET['action'];
 
-require_once(__DIR__.'/include/actions.php');
+require_once(__DIR__.'/includes/actions.php');
 
 echo $action($cf) . "\n";
 

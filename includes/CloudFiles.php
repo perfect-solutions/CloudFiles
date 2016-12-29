@@ -39,15 +39,17 @@ class CloudFiles {
         $returned = curl_exec($ch);
         $responseInfo = curl_getinfo($ch);
         $httpResponseCode = $responseInfo['http_code'];
-        curl_close($ch);
         if ($message = curl_error($ch))
         {
+            curl_close($ch);
             return array(false, $message . " ($shard)");
         } else if (!preg_match('/^2[\d]{2}$/',$httpResponseCode)) {
+            curl_close($ch);
             return array(false, "Remote status: " . $httpResponseCode . " ($shard)");
         }
         else
         {
+            curl_close($ch);
             //check size
             $cch = curl_init();
             curl_setopt ($cch, CURLOPT_RETURNTRANSFER, 1);
@@ -80,15 +82,16 @@ class CloudFiles {
     }
 
     public function deletefile($filename){
-	$shard = preg_replace('@^(http://[^/]+/).*$@', '\1', $filename);
-	$uri = preg_replace('@^http://[^/]+/(.*)$@', '\1', $filename);
+	$shard = preg_replace('@^(https?://[^/]+)/.*$@', '\1', $filename);
+	$uri = preg_replace('@^https?://[^/]+/(.*)$@', '\1', $filename);
 	foreach ($this->config['backend'] as $name => $config) {
 	    $shardUrl = $config['publicUrl'];
 	    if ($shard === $shardUrl) {
 		//it is!
 		$r = true;
 		foreach ($config['replicas'] as $replica) {
-		    $r = $r && @unlink('webdav://'.$replica.$filename);
+		    $replica = preg_replace('@https?://@', '', $replica);
+		    $r = $r && @unlink('webdav://'.$replica.$uri);
 		}
 		return $r;
 	    }
