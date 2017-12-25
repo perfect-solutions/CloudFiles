@@ -13,7 +13,7 @@ Fast + Scalable + High Availabile + Simple + Small - Cloud Files Storage
 
 ### Interesting facts
 
-* 0 single points of failure
+* [0 single points of failure][ARCHITECTURE.md]
 * Upload and Download High Availability
 * Stable Solution: 0 bugs found after testing in 8 external really-business projects
 * We use it for own projects too
