@@ -29,7 +29,7 @@ Fast + Scalable + High Availabile + Simple + Small - Cloud Files Storage
 
 PHP Example
 
->```
+>```php
 > $cf = new CloudFilesClient('http://upload.example.com/');
 > $r = rand(111111,9999999);
 > file_put_contents(__DIR__."/testfile", $r);
