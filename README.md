@@ -23,7 +23,7 @@ Fast + Scalable + High Availabile + Simple + Small - Cloud Files Storage
 * NN client libraries: PHP
 * Simple usage: examples after this text
 * Auto-test infrastructure after deployment
-* Auto-deployment: read DEPLOYMENT.md
+* Auto-deployment: read [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ## Examples
 
