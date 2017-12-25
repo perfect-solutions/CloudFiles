@@ -30,17 +30,27 @@ Fast + Scalable + High Availabile + Simple + Small - Cloud Files Storage
 PHP Example
 
 >```php
-> $cf = new CloudFilesClient('http://upload.example.com/');
+> //create file for test
 > $r = rand(111111,9999999);
 > file_put_contents(__DIR__."/testfile", $r);
+> 
+> //construct class
+> $cf = new CloudFilesClient('http://upload.example.com/');
+> 
+> //upload file
 > $url = ($cf->upload(__DIR__."/testfile", "/testdir/testfile"));
-> echo "upload passed\n";
+>
+> //download file
 > if (file_get_contents($url) == $r) {
 >    echo "download passed\n";
 > }
+>
+> //remove file
 > if ($cf->remove($url)) {
 >    echo "remove passed\n";
 > }
+> 
+> //check file exists after deletion
 > if (@file_get_contents($url) === null) {
 >    echo "removed ok\n";
 > }
