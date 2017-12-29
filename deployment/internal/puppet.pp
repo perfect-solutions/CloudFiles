@@ -18,7 +18,11 @@ class ps_cf_required_software_php {
          $packages = [ "php-fpm", "php-cli", "policycoreutils-python" ]
        }
        'debian': {
-         $packages = [ "php5-fpm", "php5-cli" ]
+	 if ( $::operatingsystemrelease < '(' ) {
+          $packages = [ "php5-fpm", "php5-cli" ]
+         } else {
+          $packages = [ "php-fpm", "php-cli" ]
+         }
        }
        default: {
          # ...
@@ -127,7 +131,12 @@ define ps_cf_configure_php_node($max_concurrent_uploads, $cf_user, $cf_group, $c
          $fpm_pool_path = "/etc/php-fpm.d"
        }
        'debian': {
-         $fpm_pool_path = "/etc/php5-fpm/pool.d"
+	 if ( $::operatingsystemrelease < '(' ) {
+          $fpm_pool_path = "/etc/php5-fpm/pool.d"
+         } else {
+          $fpm_pool_path = "/etc/php/7.0/fpm/pool.d"
+         }
+
        }
        default: {
          # ...
@@ -177,7 +186,7 @@ define ps_cf_configure_front($cf_php_host_port_list, $cf_private_ip, $cf_private
 
 }
 
-node "localhost" {
+node default {
 
  file {  "/var/pscf":
     ensure => directory,
