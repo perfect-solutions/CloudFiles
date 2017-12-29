@@ -41,6 +41,8 @@
        system: yes
    - name: mkdir /var/pscf/
      file: path=/var/pscf state=directory owner=pscf group=pscf mode=0750
+   - name: mkdir /var/pscf/cloud-files
+     file: path=/var/pscf/cloud-files state=directory owner=pscf group=pscf mode=0750
 - hosts: shard
   tasks:
    - name: install shard deps 1/1
@@ -68,5 +70,3 @@
      file: path=/var/pscf/sh-tmp state=directory owner=pscf group=www-data mode=2770
    - name: mkdir /var/pscf/sh-data
      file: path=/var/pscf/sh-data state=directory owner=pscf group=www-data mode=2770
-   
-
