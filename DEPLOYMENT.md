@@ -67,7 +67,7 @@ For clear configuration please run ```./deployment/configre --clean```. After it
 
 ## BASH deplyment way
 
-This is not recommended way, but of your OS not have a ansible/puppet/docker You can deploy with bash-script. 
+This is not recommended way, but if your OS not have a ansible/puppet/docker, You can deploy with bash-script. 
 
 For deploy role to server please run:
 
