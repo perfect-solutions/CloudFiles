@@ -71,7 +71,7 @@ This is not recommended way, but of your OS not have a ansible/puppet/docker You
 
 For deploy role to server please run:
 
-    ./deployment/raw-base (front|php-upload-service|storage)
+    ./deployment/raw-bash (front|php-upload-service|storage)
 
 Your can run it for each all roles on one server.
 
