@@ -16,7 +16,15 @@ RUN apt-get update &&\
  apt-get clean &&\
  rm -rf /etc/php/7.0/fpm/pool.d/www.conf &&\
  rm -rf /etc/nginx/sites-enabled/default &&\
- rm -rf /root/CloudFiles
+ rm -rf /root/CloudFiles &&\
+ rm -f /etc/nginx/nginx.conf
+
+ADD nginx.conf /etc/nginx/nginx.conf
+ADD pscf-ep.sh /pscf-ep.sh
+
+RUN mkdir /run/php
+RUN chmod +x /pscf-ep.sh
 
 EXPOSE 80
-EXPOSE 9001
+EXPOSE 443
+EXPOSE 9000

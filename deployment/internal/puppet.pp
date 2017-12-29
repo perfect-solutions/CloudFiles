@@ -224,7 +224,7 @@ node default {
  }
 
  ps_cf_configure_front { "b":
-    cf_php_host_port_list => [ { "host" => "127.0.0.1", "port"=>"9001" } ] ,
+    cf_php_host_port_list => [ "0.0.0.0:9000" ] ,
     cf_private_ip => "127.0.0.1",
     cf_private_server_name => "upload.local",
     directory_to_deploy => "/var/pscf/cloud-files/",
