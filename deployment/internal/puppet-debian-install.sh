@@ -2,6 +2,12 @@
 
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
 
+NOSTART=$1
+
+if [ "$NOSTART" != "--no-start" ]; then
+	NOSTART="--start"
+fi
+
 set -e
 
 sc=`realpath $0`
@@ -15,17 +21,20 @@ else
     php=php5-fpm
 fi
 
-#FPM
-systemctl stop $php || true
-systemctl start $php
+if [ "$NOSTART" == "--start" ]; then
 
-#NGINX
-systemctl stop nginx || true
-systemctl start nginx
+	#FPM
+	systemctl stop $php || true
+	systemctl start $php
 
-#enable after
-systemctl enable nginx
-systemctl enable $php
+	#NGINX
+	systemctl stop nginx || true
+	systemctl start nginx
+
+	#enable after
+	systemctl enable nginx
+	systemctl enable $php
+fi;
 
 #copyfiles
 dd=`dirname $d`
