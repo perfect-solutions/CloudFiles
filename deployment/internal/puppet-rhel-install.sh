@@ -2,22 +2,20 @@
 
 export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
 
-set -x
+set -e
 
 sc=`realpath $0`
 d=`dirname $sc`
 
 puppet apply --verbose $d/puppet.pp
 
-if [ "`cat /etc/debian_version | tr "." " " | awk '{print $1}'`" == "9" ]; then
-    php=php7.0-fpm
-else
-    php=php5-fpm
-fi
-
 #FPM
-systemctl stop $php
-systemctl start $php
+systemctl stop php-fpm || true
+systemctl start php-fpm || true
+$d/rhel-allow-audit.sh
+systemctl stop php-fpm
+systemctl start php-fpm
+
 
 #NGINX
 systemctl stop nginx
@@ -25,7 +23,7 @@ systemctl start nginx
 
 #enable after
 systemctl enable nginx
-systemctl enable $php
+systemctl enable php-fpm
 
 #copyfiles
 dd=`dirname $d`

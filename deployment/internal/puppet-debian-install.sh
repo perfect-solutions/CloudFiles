@@ -9,21 +9,23 @@ d=`dirname $sc`
 
 puppet apply --verbose $d/puppet.pp
 
-#FPM
-systemctl stop php-fpm
-systemctl start php-fpm
-$d/rhel-allow-audit.sh
-systemctl stop php-fpm
-systemctl start php-fpm
+if [ "`cat /etc/debian_version | tr "." " " | awk '{print $1}'`" == "9" ]; then
+    php=php7.0-fpm
+else
+    php=php5-fpm
+fi
 
+#FPM
+systemctl stop $php || true
+systemctl start $php
 
 #NGINX
-systemctl stop nginx
+systemctl stop nginx || true
 systemctl start nginx
 
 #enable after
 systemctl enable nginx
-systemctl enable php-fpm
+systemctl enable $php
 
 #copyfiles
 dd=`dirname $d`

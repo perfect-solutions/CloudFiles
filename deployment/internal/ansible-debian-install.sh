@@ -4,5 +4,8 @@ export PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/
 
 set -e
 
-fgrep php-fpm /var/log/audit/audit.log | audit2allow -M phpfpmlocal
-semodule -i phpfpmlocal.pp
+sc=`realpath $0`
+d=`dirname $sc`
+
+ansible-playbook -i $d/inventory $d/debian9-ansible.yml
+
