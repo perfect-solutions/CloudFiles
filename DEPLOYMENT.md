@@ -75,7 +75,7 @@ For deploy role to server please run:
 
 Your can run it for each all roles on one server.
 
-## Deployment side effets:
+## Deployment side effects:
 
 - If nginx already installed, it will be **restarted**
 - If php-fpm already installed, it will be **restarted**
