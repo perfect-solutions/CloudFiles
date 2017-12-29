@@ -5,20 +5,68 @@
      apt:
       name: nginx-extras
       state: present
+   - name: enable deps 1/1
+     systemd:
+      name: nginx
+      state: restarted
+      enabled: True
+   - name: mkdir /etc/nginx/ps-infra-deployment
+     file: path=/etc/nginx/ps-infra-deployment state=directory
 - hosts: php
   tasks:
-   - name: install deps 1/2
+   - name: install php deps 1/2
      apt:
       name: php-fpm
       state: present
-   - name: install deps 2/2
+   - name: install php deps 2/2
      apt:
       name: php-cli
       state: present
+   - name: enable php deps 1/1
+     systemd:
+      name: php7.0-fpm
+      state: restarted
+      enabled: True
+   - name: group pscf
+     group:
+       name: pscf
+       state: present
+       system: yes
+   - name: user pscf
+     user:
+       name: pscf
+       group: pscf
+       state: present
+       shell: /bin/false
+       system: yes
+   - name: mkdir /var/pscf/
+     file: path=/var/pscf state=directory owner=pscf group=pscf mode=0750
 - hosts: shard
   tasks:
-   - name: install deps 1/1
+   - name: install shard deps 1/1
      apt:
       name: nginx-extras
       state: present
+   - name: enable shard deps 1/1
+     systemd:
+      name: nginx
+      state: restarted
+      enabled: True
+   - name: group pscf
+     group:
+       name: pscf
+       state: present
+       system: yes
+   - name: user pscf
+     user:
+       name: pscf
+       groups: pscf,www-data
+       state: present
+       shell: /bin/false
+       system: yes
+   - name: mkdir /var/pscf/sh-tmp
+     file: path=/var/pscf/sh-tmp state=directory owner=pscf group=www-data mode=2770
+   - name: mkdir /var/pscf/sh-data
+     file: path=/var/pscf/sh-data state=directory owner=pscf group=www-data mode=2770
+   
 

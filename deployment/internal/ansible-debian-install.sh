@@ -7,5 +7,12 @@ set -e
 sc=`realpath $0`
 d=`dirname $sc`
 
-ansible-playbook -i $d/inventory $d/debian9-ansible.yml
+if [ "`cat /etc/debian_version | tr "." " " | awk '{print $1}'`" == "9" ]; then
+    ansible-playbook -i $d/inventory $d/debian9-ansible.yml
+elif [ "`cat /etc/debian_version | tr "." " " | awk '{print $1}'`" == "8" ]; then
+    ansible-playbook -i $d/inventory $d/debian8-ansible.yml
+else
+    echo "Unsupported debian version"
+fi
+
 
