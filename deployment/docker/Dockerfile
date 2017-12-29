@@ -2,6 +2,8 @@ FROM debian:stretch
 
 MAINTAINER Perfect Solutions version: 1.0
 
+ADD pscf-ep.sh /pscf-ep.sh
+
 RUN apt-get update &&\
  apt-get install -y git puppet &&\
  git clone https://github.com/perfect-solutions/CloudFiles.git /root/CloudFiles &&\
@@ -17,13 +19,11 @@ RUN apt-get update &&\
  rm -rf /etc/php/7.0/fpm/pool.d/www.conf &&\
  rm -rf /etc/nginx/sites-enabled/default &&\
  rm -rf /root/CloudFiles &&\
- rm -f /etc/nginx/nginx.conf
+ rm -f /etc/nginx/nginx.conf &&\
+ mkdir /run/php &&\
+ chmod +x /pscf-ep.sh
 
 ADD nginx.conf /etc/nginx/nginx.conf
-ADD pscf-ep.sh /pscf-ep.sh
-
-RUN mkdir /run/php
-RUN chmod +x /pscf-ep.sh
 
 EXPOSE 80
 EXPOSE 443
