@@ -67,15 +67,15 @@ For clear configuration please run ```./deployment/configre --clean```. After it
 
 ## BASH deplyment way
 
-This is not recommended way, but of your OS not have a ansible/puppet/docker You can deploy with bash-script. 
+This is not recommended way, but if your OS not have a ansible/puppet/docker, You can deploy with bash-script. 
 
 For deploy role to server please run:
 
-    ./deployment/raw-base (front|php-upload-service|storage)
+    ./deployment/raw-bash (front|php-upload-service|storage)
 
 Your can run it for each all roles on one server.
 
-## Deployment side effets:
+## Deployment side effects:
 
 - If nginx already installed, it will be **restarted**
 - If php-fpm already installed, it will be **restarted**
