@@ -38,7 +38,7 @@ PHP Example
 > $cf = new CloudFilesClient('http://upload.example.com/');
 > 
 > //upload file
-> $url = ($cf->upload(__DIR__."/testfile", "/testdir/testfile"));
+> $url = $cf->upload(__DIR__."/testfile", "/testdir/testfile");
 >
 > //download file
 > if (file_get_contents($url) == $r) {
