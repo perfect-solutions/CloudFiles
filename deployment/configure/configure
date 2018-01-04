@@ -1,0 +1,62 @@
+#!/usr/bin/env php
+<?php
+
+function cmd_help()
+{
+    echo './configure.php "(http://s1r1.example.com,http://s1r2.example.com=ro,http://s1.example.com)(http://s2r1.example.com,http://s2r2.example.com=rw,http://s2.example.com)"'." ./config-file.php\n";
+    exit(1);
+}
+
+function parse_in($str)
+{
+    $str = preg_replace('/^\(/', '', $str);
+    $str = preg_replace('/\)$/', '', $str);
+    $shards = explode(')(', $str);
+    $sh = [];
+    foreach ($shards as $shN => $shard) {
+	list($shard, $modes) = explode('=', $shard);
+	list($mode, $public_url) = explode(',', $modes);
+	if ($mode == 'rw') {
+	    $rw = true;
+	} else if ($mode == 'ro') {
+	    $rw = false;
+	} else {
+	    echo "mode must be: =ro or =rw\n"; exit(1);
+	}
+	$replicas = explode(',', $shard);
+	$sh['shard_'.$shN] = make_shard($replicas, $rw, $public_url);
+    }
+    return make_config($sh);
+}
+
+$public_url = array(
+    'shard_a' => 'http://sh-a.example.com',
+    'shard_b' => 'http://sh-b.example.com',
+);
+
+$prefix = "<?php\n\nreturn ";
+
+$postfix = ";\n";
+
+function make_shard(array $replicas, $rw=true, $public_url)
+{
+    return array(
+        'write' => $rw,
+        'replicas' => $replicas,
+        'publicUrl' => $public_url
+    );
+}
+
+function make_config(array $shards)
+{
+    return array(
+        'backend' => $shards
+    );
+}
+
+if (count($argv) < 3) {
+    cmd_help();
+}
+
+$contents = $prefix.var_export(parse_in($argv[1]), true).$postfix;
+file_put_contents($argv[2], $contents);
