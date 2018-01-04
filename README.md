@@ -41,18 +41,12 @@ PHP Example
 > $url = $cf->upload(__DIR__."/testfile", "/testdir/testfile");
 >
 > //download file
-> if (file_get_contents($url) == $r) {
->    echo "download passed\n";
-> }
+> if (file_get_contents($url) == $r) echo "!";
 >
 > //remove file
-> if ($cf->remove($url)) {
->    echo "remove passed\n";
-> }
+> if ($cf->remove($url)) echo "!";
 > 
 > //check file exists after deletion
-> if (@file_get_contents($url) === null) {
->    echo "removed ok\n";
-> }
+> if (@file_get_contents($url) === null)  echo "!";
 >```
 
