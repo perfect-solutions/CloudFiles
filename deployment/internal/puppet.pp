@@ -18,11 +18,19 @@ class ps_cf_required_software_php {
          $packages = [ "php-fpm", "php-cli", "policycoreutils-python" ]
        }
        'debian': {
-	 if ( $::operatingsystemrelease < '(' ) {
-          $packages = [ "php5-fpm", "php5-cli" ]
-         } else {
-          $packages = [ "php-fpm", "php-cli" ]
-         }
+	 if ( $::operatingsystem == 'Ubuntu' ) {
+		if ( $::operatingsystemrelease < 15 ) {
+		    $packages = [ "php5-fpm", "php5-cli"]
+		} else {
+		    $packages = [ "php-fpm", "php-cli"]
+		}
+	 } else {
+		if ( $::operatingsystemrelease < 9 ) {
+		    $packages = [ "php5-fpm", "php5-cli"]
+		} else {
+		    $packages = [ "php-fpm", "php-cli"]
+		}
+        }
        }
        default: {
          # ...
@@ -131,12 +139,19 @@ define ps_cf_configure_php_node($max_concurrent_uploads, $cf_user, $cf_group, $c
          $fpm_pool_path = "/etc/php-fpm.d"
        }
        'debian': {
-	 if ( $::operatingsystemrelease < '(' ) {
-          $fpm_pool_path = "/etc/php5-fpm/pool.d"
-         } else {
-          $fpm_pool_path = "/etc/php/7.0/fpm/pool.d"
+	 if ( $::operatingsystem == 'Ubuntu' ) {
+		if ( $::operatingsystemrelease < 15 ) {
+		    $fpm_pool_path = "/etc/php5-fpm/pool.d"
+		} else {
+		    $fpm_pool_path = "/etc/php/7.0/fpm/pool.d"
+		}
+	 } else {
+		if ( $::operatingsystemrelease < 9 ) {
+		    $fpm_pool_path = "/etc/php5-fpm/pool.d"
+		} else {
+		    $fpm_pool_path = "/etc/php/7.0/fpm/pool.d"
+		}
          }
-
        }
        default: {
          # ...
