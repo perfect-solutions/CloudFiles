@@ -33,7 +33,7 @@ function upload(CloudFiles $cf)
 	    ));
 	}
     } else {
-	header('HTTP/1.1 503 Service Down');
+	header('HTTP/1.1 400 No Files In Request');
 	$result = json_encode(array(
 	    'status' => 'fail',
 	    'message' => 'PHP UPLOAD: can\'t upload or file missed',
@@ -69,6 +69,7 @@ function remove(CloudFiles $cf)
 	    'status' => 'ok',
         ));
     } else {
+	header('HTTP/1.1 404 I can\'t delete this url');
 	$result = json_encode(array(
 	    'status' => 'fail',
 	    'message' => 'not found',
